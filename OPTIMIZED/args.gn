@@ -44,6 +44,7 @@ enable_stripping = true
 dcheck_always_on = false
 exclude_unwind_tables = true
 enable_precompiled_headers = false
+treat_warnings_as_errors = false
 symbol_level = 0
 use_vaapi = true
 #enable_library_cdms = true
