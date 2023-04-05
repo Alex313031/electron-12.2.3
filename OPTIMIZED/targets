@@ -8,6 +8,8 @@ export DEPOT_TOOLS_UPDATE=0 &&
 
 export CHROMIUM_BUILDTOOLS_PATH=`pwd`/buildtools &&
 
-gn gen out/Release --args="import(\"//electron/build/args/opt.gn\")" &&
+gn gen out/Release --args="import(\"//electron/build/args/args.gn\")"
+
+gn gen out/Release --args="import(\"//electron/build/args/win_args.gn\")"
 
 autoninja -C out/Release electron electron_chromedriver electron_mksnapshot electron_dist_zip electron_chromedriver_zip electron_ffmpeg_zip electron_mksnapshot_zip
