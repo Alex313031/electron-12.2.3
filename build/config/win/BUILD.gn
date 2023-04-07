@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/c++/c++.gni")
 import("//build/config/chrome_build.gni")
 import("//build/config/clang/clang.gni")
 import("//build/config/compiler/compiler.gni")
@@ -76,7 +77,7 @@ config("compiler") {
 
   cflags += [
     # Work around crbug.com/526851, bug in VS 2015 RTM compiler.
-    "/Zc:sizedDealloc-",
+    # "/Zc:sizedDealloc-",
   ]
 
   if (is_clang) {
@@ -112,7 +113,7 @@ config("compiler") {
     # microarchitecture. MSVC only supports a subset of architectures, and the
     # next step after SSE2 will be AVX.
     if (current_cpu == "x86" || current_cpu == "x64") {
-      cflags += [ "-mavx", "-maes", ]
+      cflags += [ "/O2", "-mavx", "-maes", "/clang:-O3", "-Xclang", "-O3" ]
     }
 
     if (exec_script("//build/win/use_ansi_codes.py", [], "trim string") ==
@@ -151,6 +152,7 @@ config("compiler") {
 
     # Don't look for libpaths in %LIB%, similar to /X in cflags above.
     ldflags += [ "/lldignoreenv" ]
+    ldflags += [ "/opt:lldlto=3", ]
   }
 
   if (!is_debug && !is_component_build) {
@@ -162,12 +164,13 @@ config("compiler") {
       "/OPT:ICF",
       "/INCREMENTAL:NO",
       "/FIXED:NO",
+      "/OPT:lldlto=3",
     ]
 
     if (use_lld) {
       # String tail merging leads to smaller binaries, but they don't compress
       # as well, leading to increased mini_installer size (crbug.com/838449).
-      ldflags += [ "/OPT:NOLLDTAILMERGE" ]
+      # ldflags += [ "/OPT:NOLLDTAILMERGE" ]
     }
 
     # TODO(siggi): Is this of any use anymore?
@@ -175,7 +178,7 @@ config("compiler") {
     # PDB file by about 5%) but does not otherwise alter the output binary. It
     # is enabled opportunistically for builds where it is not prohibited (not
     # supported when incrementally linking, or using /debug:fastlink).
-    ldflags += [ "/PROFILE" ]
+    # ldflags += [ "/PROFILE" ]
   }
 
   # arflags apply only to static_libraries. The normal linker configs are only
