@@ -12,4 +12,4 @@ gn gen out/Release --args="import(\"//electron/build/args/args.gn\")"
 
 gn gen out/Release --args="import(\"//electron/build/args/win_args.gn\")"
 
-autoninja -C out/Release electron electron_chromedriver electron_mksnapshot electron_dist_zip electron_chromedriver_zip electron_ffmpeg_zip electron_mksnapshot_zip
+autoninja -C out/Release electron electron_chromedriver electron_mksnapshot v8_context_snapshot_generator electron_dist_zip electron_chromedriver_zip electron_ffmpeg_zip electron_mksnapshot_zip
