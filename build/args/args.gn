@@ -45,6 +45,7 @@ dcheck_always_on = false
 exclude_unwind_tables = true
 enable_precompiled_headers = false
 treat_warnings_as_errors = false
+use_v8_context_snapshot = true
 # disable_fieldtrial_testing_config = true
 fieldtrial_testing_like_official_build = true
 symbol_level = 0
